@@ -2,5 +2,12 @@
     "parser": "@typescript-eslint/parser",
     "extends": ["plugin:@typescript-eslint/recommended"],
     "parserOptions": { "ecmaVersion": 2022, "sourceType": "module" },
-    "rules": {}
+    "rules": {
+        "no-console": "error",
+        "no-return-await": 1,
+        "@typescript/exlint/eplicit-member-accessibility": 0,
+        "@typescript/exlint/eplicit-fucntion-return-type": 0,
+        "@typescript/exlint/no-parameter-properties": 0,
+        "@typescript/exlint/interface-name-prefix": 0
+    }
 }
