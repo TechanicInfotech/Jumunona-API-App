@@ -2,6 +2,7 @@ import express, { Express } from 'express'
 import config from './config'
 import appLoader from './loaders/index'
 import AppLogger from './loaders/logger'
+import 'reflect-metadata'
 
 async function startServer() {
     const app: Express = express()

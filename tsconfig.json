@@ -6,6 +6,7 @@
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
         "forceConsistentCasingInFileNames": true,
+        "useUnknownInCatchVariables": false,
         "moduleResolution": "Node",
         "module": "CommonJS",
         "pretty": true,

@@ -1,6 +1,7 @@
-import mongoose from 'mongoose'
+import mongoose, { Connection } from 'mongoose'
 import config from '../config'
 
-export default () => {
-    return mongoose.connect(config.mongo.uri)
+export default async (): Promise<Connection> => {
+    await mongoose.connect(config.mongo.uri)
+    return mongoose.connection
 }
