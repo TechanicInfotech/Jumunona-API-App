@@ -1,0 +1,37 @@
+{
+    "name": "jumunona-api-app",
+    "version": "1.0.0",
+    "description": "Backend App for Jununona Ecommerce",
+    "main": "src/app.ts",
+    "directories": {
+        "src": "src"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "lint": "eslint src/**/*.ts",
+        "format": "prettier src/**/*.ts && eslint src/**/*.ts --fix",
+        "clean": "rimraf dist",
+        "build": "npm run clean && tsc",
+        "start": "npm run build && node dist/app.js",
+        "prepare": "husky",
+        "pre-commit": "npm run format"
+    },
+    "author": "Techanic Infotech",
+    "license": "ISC",
+    "devDependencies": {
+        "@types/express": "^4.17.21",
+        "@types/node": "^20.14.7",
+        "@typescript-eslint/eslint-plugin": "^7.13.1",
+        "@typescript-eslint/parser": "^7.13.1",
+        "eslint": "^8.57.0",
+        "husky": "^9.0.11",
+        "rimraf": "^5.0.7",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.5.2"
+    },
+    "dependencies": {
+        "dotenv": "^16.4.5",
+        "express": "^4.19.2",
+        "prettier": "^3.3.2"
+    }
+}

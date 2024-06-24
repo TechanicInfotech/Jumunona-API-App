@@ -1,0 +1,8 @@
+#           Directory
+node_modules
+.idea
+dist
+
+
+#envs
+.env

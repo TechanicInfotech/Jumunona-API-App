@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "target": "ES2022",
+        "typeRoots": ["node_modules/@types"],
+        "allowSyntheticDefaultImports": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "forceConsistentCasingInFileNames": true,
+        "moduleResolution": "Node",
+        "module": "CommonJS",
+        "pretty": true,
+        "sourceMap": true,
+        "outDir": "./dist",
+        "allowJs": true,
+        "noEmit": false,
+        "strict": true,
+        "skipLibCheck": true,
+        "esModuleInterop": true
+    },
+    "include": ["./src/**/*.ts"],
+    "exclude": ["node_modules", "tests"]
+}
