@@ -7,6 +7,9 @@ if (!envFound) throw new Error(' ⚠️ No Environment Variable File Found ⚠�
 
 export default {
     port: parseInt(process.env.PORT || '5000', 10) || 5000,
+    auth: {
+        jwtSecret: process.env.JWT_SECRET || 'testSecret',
+    },
     backend: {
         baseUrl: process.env.BACKEND_BASE_URL || 'https://api.jumunona.com',
     },

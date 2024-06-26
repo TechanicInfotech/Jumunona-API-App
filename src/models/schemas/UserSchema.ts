@@ -3,7 +3,7 @@ import { Container } from 'typedi'
 
 const UserSchema = new Schema({
     details: {
-        phoneNumber: { type: String, required: true, unique: true },
+        phone: { type: String, required: true, unique: true },
         name: String,
         email: String,
         gender: String,
@@ -14,16 +14,16 @@ const UserSchema = new Schema({
     defaultAddress: String,
     firebaseToken: String,
     referral: {
-        referralCode: { type: String, required: true },
-        referredAddress: String,
+        referralCode: { type: String, required: true, unique: true },
+        referredBy: String,
         referralTeam: Array({
-            userId: { type: String, required: true },
-            phoneNumber: { type: String, required: true },
+            phone: { type: String, required: true },
         }),
     },
 })
 
 export interface IUserSchema extends Document {
+    _id: mongoose.Types.ObjectId
     details: IUserDetails
     password: string
     defaultAddress?: string
@@ -35,11 +35,11 @@ export interface IUserReferral {
     referredBy?: string
     referralTeam?: {
         userid: string
-        phoneNumber: string
+        phone: string
     }[]
 }
 export interface IUserDetails {
-    phoneNumber: string
+    phone: string
     name?: string
     email?: string
     gender?: string
