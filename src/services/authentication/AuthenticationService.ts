@@ -1,4 +1,4 @@
-import { Container, Service } from 'typedi'
+import { Container, Inject, Service } from 'typedi'
 import { UtilsService } from '../UtilsService'
 import { IUserSchema } from '../../models/schemas/UserSchema'
 import mongoose, { Model } from 'mongoose'
@@ -10,17 +10,20 @@ import config from '../../config'
 @Service()
 export class AuthenticationService {
     constructor(
-        private utilsService: UtilsService,
+        @Inject('UserSchema')
         private userSchema: Model<
             IUserSchema & mongoose.Document
         > = Container.get('UserSchema'),
-        private communicationService: CommunicationService
+        @Inject()
+        private communicationService: CommunicationService,
+        @Inject()
+        private utilsService: UtilsService
     ) {}
     async register(registrationDetails: IRegistrationDetails) {
         this.validate(registrationDetails)
 
         const user: IUserSchema | null = await this.userSchema.findOne({
-            phone: registrationDetails.phone,
+            'details.phone': registrationDetails.phone,
         })
         if (user) throw new Error(Errors.USER_ALREADY_EXISTS)
 
@@ -74,6 +77,23 @@ export class AuthenticationService {
         }
     }
 
+    async sendOtp(phone: string) {
+        const user: IUserSchema | null = await this.userSchema.findOne({
+            'details.phone': phone,
+        })
+
+        if (user) throw new Error(Errors.USER_ALREADY_EXISTS)
+
+        const otpVerification = await this.communicationService.sendOtp(
+            `+${phone}`
+        )
+        if (!otpVerification) throw new Error(Errors.OTP_VERIFICATION_FAILED)
+
+        return {
+            message: `OTP Sent Successfully`,
+        }
+    }
+
     private validate(dataFields: IRegistrationDetails): void {
         if (dataFields.phone === '') throw new Error(Errors.PHONE_EMPTY)
         if (!this.utilsService.isNumeric(dataFields.phone))
@@ -92,7 +112,7 @@ export class AuthenticationService {
             throw new Error(Errors.REFERRAL_CODE_LENGTH)
         if (
             dataFields.referralCode &&
-            this.utilsService.isNumeric(dataFields.referralCode)
+            !this.utilsService.isNumeric(dataFields.referralCode)
         )
             throw new Error(Errors.REFERRAL_CODE_NOT_NUMERIC)
     }

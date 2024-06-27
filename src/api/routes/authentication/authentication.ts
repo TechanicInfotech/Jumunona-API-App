@@ -6,7 +6,10 @@ import {
     IRegistrationDetails,
 } from '../../../services/authentication/AuthenticationService'
 import { ResponseWrapper } from '../../responses/ResponseWrapper'
-import { IRegisterResponse } from '../../responses/authentication'
+import {
+    IRegisterResponse,
+    ISendOtpResponse,
+} from '../../responses/authentication'
 
 export default (router: Router) => {
     const authenticationService = Container.get(AuthenticationService)
@@ -19,13 +22,26 @@ export default (router: Router) => {
                 otp: req.body.otp.toString().trim(),
                 password: req.body.password.toString().trim(),
                 confirmPassword: req.body.confirmPassword.toString().trim(),
-                referralCode: req.body.referralCode.toString().trim(),
+                referralCode: req.body.referralCode?.toString().trim(),
             }
 
             const data: IRegisterResponse =
                 await authenticationService.register(registrationDetails)
             response.setData(data)
-            await authenticationService.register(registrationDetails)
+        } catch (e) {
+            response.setError(e.message)
+            AppLogger.error(e)
+        }
+        res.json(response)
+    })
+
+    router.post('/auth/sendOtp', async (req: Request, res: Response) => {
+        const response = new ResponseWrapper<ISendOtpResponse>()
+        try {
+            const phone: string = req.body.phone.toString()
+            const data: ISendOtpResponse =
+                await authenticationService.sendOtp(phone)
+            response.setData(data)
         } catch (e) {
             response.setError(e.message)
             AppLogger.error(e)

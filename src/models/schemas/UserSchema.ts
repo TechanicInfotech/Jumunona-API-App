@@ -18,6 +18,7 @@ const UserSchema = new Schema({
         referredBy: String,
         referralTeam: Array({
             phone: { type: String, required: true },
+            userId: { type: mongoose.Types.ObjectId, required: true },
         }),
     },
 })
@@ -34,7 +35,7 @@ export interface IUserReferral {
     referralCode: string
     referredBy?: string
     referralTeam?: {
-        userid: string
+        userId: string
         phone: string
     }[]
 }
